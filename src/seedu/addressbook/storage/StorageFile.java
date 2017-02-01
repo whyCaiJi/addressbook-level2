@@ -90,6 +90,7 @@ public class StorageFile {
      * Saves all data to this storage file.
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
+     * @throws FileNotFoundOperationException if the storage file is missing
      */
     public void save(AddressBook addressBook) throws StorageOperationException, FileNotFoundException {
 
