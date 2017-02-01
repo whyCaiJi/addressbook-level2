@@ -91,7 +91,7 @@ public class StorageFile {
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
-    public void save(AddressBook addressBook) throws StorageOperationException {
+    public void save(AddressBook addressBook) throws StorageOperationException, FileNotFoundException {
 
         /* Note: Note the 'try with resource' statement below.
          * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
@@ -104,6 +104,8 @@ public class StorageFile {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(toSave, fileWriter);
 
+        } catch (FileNotFoundException fnfe) { 
+        	throw new FileNotFoundException("File path " + path + " not found!");
         } catch (IOException ioe) {
             throw new StorageOperationException("Error writing to file: " + path);
         } catch (JAXBException jaxbe) {
@@ -116,7 +118,7 @@ public class StorageFile {
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
      */
-    public AddressBook load() throws StorageOperationException {
+    public AddressBook load() throws StorageOperationException, FileNotFoundException {
         try (final Reader fileReader =
                      new BufferedReader(new FileReader(path.toFile()))) {
 
