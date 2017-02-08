@@ -73,6 +73,7 @@ public class Main {
     /** Prints the Goodbye message and exits. */
     private void exit() {
         ui.showGoodbyeMessage();
+        ui.showAllTaggings(addressBook.getAllTaggings());
         System.exit(0);
     }
 

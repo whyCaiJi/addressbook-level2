@@ -1,15 +1,21 @@
 package seedu.addressbook.data;
 
-import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.person.UniquePersonList.*;
-import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.data.tag.UniqueTagList.*;
-import seedu.addressbook.data.tag.Tag;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import seedu.addressbook.data.person.Person;
+import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.person.UniquePersonList;
+import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
+import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
+import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.Tagging;
+import seedu.addressbook.data.tag.UniqueTagList;
+import seedu.addressbook.data.tag.UniqueTagList.DuplicateTagException;
+import seedu.addressbook.data.tag.UniqueTagList.TagNotFoundException;
 
 /**
  * Represents the entire address book. Contains the data of the address book.
@@ -22,6 +28,7 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
+    private final ArrayList<Tagging> allTaggings;	// contains all tagging operations
 
     /**
      * Creates an empty address book.
@@ -29,6 +36,7 @@ public class AddressBook {
     public AddressBook() {
         allPersons = new UniquePersonList();
         allTags = new UniqueTagList();
+        allTaggings = new ArrayList<Tagging>();
     }
 
     /**
@@ -41,6 +49,7 @@ public class AddressBook {
     public AddressBook(UniquePersonList persons, UniqueTagList tags) {
         this.allPersons = new UniquePersonList(persons);
         this.allTags = new UniqueTagList(tags);
+        this.allTaggings = new ArrayList<Tagging>();
         for (Person p : allPersons) {
             syncTagsWithMasterList(p);
         }
@@ -89,6 +98,24 @@ public class AddressBook {
     public void addTag(Tag toAdd) throws DuplicateTagException {
         allTags.add(toAdd);
     }
+    
+    /**
+     * Put adding tag operation to the taggingList
+     * @param tag
+     * @param person
+     */
+    public void addTagToPerson(Tag tag, Person person) {
+    	allTaggings.add(new Tagging(true, person, tag));
+    }
+    
+    /**
+     * Put removing tag operation to the taggingList
+     * @param tag
+     * @param person
+     */
+    public void removeTagToPerson(Tag tag, Person person) {
+    	allTaggings.add(new Tagging(false, person, tag));
+    }
 
     /**
      * Checks if an equivalent person exists in the address book.
@@ -128,6 +155,7 @@ public class AddressBook {
     public void clear() {
         allPersons.clear();
         allTags.clear();
+        allTaggings.clear();
     }
 
     /**
@@ -142,6 +170,10 @@ public class AddressBook {
      */
     public UniqueTagList getAllTags() {
         return new UniqueTagList(allTags);
+    }
+    
+    public ArrayList<Tagging> getAllTaggings() {
+    	return this.allTaggings;
     }
 
     @Override
