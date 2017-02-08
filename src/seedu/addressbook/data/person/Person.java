@@ -66,6 +66,15 @@ public class Person implements ReadOnlyPerson {
         tags.setTags(replacement);
     }
 
+    public String getPrintableString(Printable...printables) {
+    	StringBuilder sb = new StringBuilder();
+    	for(Printable p: printables) {
+    		sb.append(p.getPrintableString());
+    		sb.append("\n");
+    	}
+    	return sb.toString();
+    }
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
