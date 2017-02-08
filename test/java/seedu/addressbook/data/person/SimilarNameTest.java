@@ -18,5 +18,9 @@ public class SimilarNameTest {
 		// Comparing two different names
 		Name n3 = new Name("Billy Jean");
 		assertFalse(n1.isSimilar(n3));
+		
+		// Comparing two similar names differing in case
+		Name n4 = new Name("john doe");
+		assertTrue(n1.isSimilar(n4));
 	}
 }
