@@ -25,5 +25,9 @@ public class SimilarNameTest {
 		// Comparing two similar names differing in case
 		Name n4 = new Name("john doe");
 		assertTrue(n1.isSimilar(n4));
+		
+		// Handling middle name case
+		Name n5 = new Name("John K Doe");
+		assertTrue(n1.isSimilar(n5));
 	}
 }

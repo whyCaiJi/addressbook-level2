@@ -65,11 +65,9 @@ public class Name {
     		return false;
     	}
     	
-    	if(this.toString().equals(other.toString())) {
-    		return true;
-    	} else if (this.toString().equalsIgnoreCase(other.toString())) {
-    		return true;
-    	}
-    	return false;
+    	String[] name1 = this.toString().split(" ");
+    	String[] name2 = other.toString().split(" ");
+    	
+    	return name1[0].equalsIgnoreCase(name2[0]) && name1[name1.length-1].equalsIgnoreCase(name2[name2.length-1]);
     }
 }
